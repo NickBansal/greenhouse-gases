@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { useQuery } from 'react-query';
 
@@ -7,6 +7,8 @@ import DATA from '../constants/api';
 import SearchBar from '../components/SearchBar';
 
 export default function Home() {
+  const [filteredCities, setFilteredCities] = useState([]);
+
   const { isLoading, data } = useQuery(
     ['getCities'],
     () => http.get({
@@ -14,6 +16,20 @@ export default function Home() {
     }),
     { refetchOnWindowFocus: false },
   );
+
+  const cities = data?.response?.results?.map(({ city }) => city);
+
+  const filterAllCities = (searchTerm) => {
+    const newCities = cities.slice();
+
+    if (!searchTerm) {
+      setFilteredCities('');
+    } else {
+      setFilteredCities(newCities.filter(
+        (city) => city.toLowerCase().includes(searchTerm.toLowerCase()),
+      ));
+    }
+  };
 
   return (
     <div>
@@ -23,13 +39,27 @@ export default function Home() {
       </Head>
 
       <main className="container mx-auto">
-        {isLoading && <h2>Loading...</h2>}
+        {isLoading && <h2 className="text-center">Loading...</h2>}
 
         {data?.error && <h2>There is an error here...</h2>}
 
         {data?.success && <h2 className="text-center">HELLO</h2>}
 
-        <SearchBar handleClick={() => {}} className="mx-auto my-4 md:w-3/4" />
+        <SearchBar handleClick={filterAllCities} className="mx-auto mt-4 md:w-3/4" />
+
+        {filteredCities.length > 0
+        && (
+        <ul className="mx-auto shadow-lg md:w-3/4">
+          {filteredCities.slice(0, 10).map((city) => (
+            <li
+              key={city}
+              className="px-4 py-2 cursor-pointer even:bg-neutral-200 odd:bg-slate-300 hover:bg-amber-400 first:rounded-t-md last:rounded-b-md"
+            >
+              {city}
+            </li>
+          ))}
+        </ul>
+        )}
 
       </main>
     </div>
