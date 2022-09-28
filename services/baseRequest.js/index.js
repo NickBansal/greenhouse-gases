@@ -1,4 +1,3 @@
-/* eslint-disable no-promise-executor-return */
 import axios from 'axios';
 
 export default function baseRequest({ url, method }) {
