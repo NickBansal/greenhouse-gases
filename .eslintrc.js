@@ -6,7 +6,6 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
-    'jest'
   ],
   overrides: [
   ],
@@ -18,5 +17,8 @@ module.exports = {
     'react',
   ],
   rules: {
+    'react/jsx-filename-extension': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/prop-types': 0,
   },
 };
