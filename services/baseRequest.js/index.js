@@ -1,9 +1,9 @@
 /* eslint-disable no-promise-executor-return */
 import axios from 'axios';
 
-const get = (url) => {
+export default function baseRequest({ url, method }) {
   const config = {
-    method: 'GET',
+    method: method || 'GET',
     url,
     header: 'accept: application/json',
   };
@@ -12,16 +12,10 @@ const get = (url) => {
 
   return request.then((response) => new Promise((resolve) => resolve({
     success: true,
-    response,
+    response: response.data,
     error: false,
   }))).catch((error) => new Promise((resolve) => resolve({
     success: false,
     error,
   })));
-};
-
-const http = {
-  get,
-};
-
-export default http;
+}

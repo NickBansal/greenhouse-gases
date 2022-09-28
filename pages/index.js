@@ -1,13 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
 import { useQuery } from 'react-query';
-import http from '../services/getData';
+import http from '../services/http';
 import DATA from '../constants/api';
 
 export default function Home() {
-  const { isLoading, isError, data } = useQuery(['getCities'], () => http.get({
-    url: DATA.GET_DATA,
-  }), { refetchOnWindowFocus: false });
+  const { isLoading, isError, data } = useQuery(
+    ['getCities'],
+    () => http.get({
+      url: DATA.GET_DATA,
+    }),
+    { refetchOnWindowFocus: false },
+  );
 
   return (
     <div>
@@ -17,11 +21,11 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="text-3xl font-bold underline">
-          Welcome to
-          {' '}
-          <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        {isLoading && <h2>Loading...</h2>}
+
+        {isError && <h2>There is an error here...</h2>}
+
+        {data?.success && <h2>HELLO</h2>}
 
       </main>
 
