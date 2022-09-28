@@ -10,12 +10,12 @@ export default function baseRequest({ url, method }) {
 
   const request = axios(url, config);
 
-  return request.then((response) => new Promise((resolve) => resolve({
+  return request.then((response) => ({
     success: true,
     response: response.data,
     error: false,
-  }))).catch((error) => new Promise((resolve) => resolve({
+  })).catch((error) => ({
     success: false,
     error,
-  })));
+  }));
 }
