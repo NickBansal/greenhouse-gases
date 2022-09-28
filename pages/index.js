@@ -6,6 +6,8 @@ import http from '../services/http';
 import DATA from '../constants/api';
 import SearchBar from '../components/SearchBar';
 
+const heading = 'text-2xl text-center';
+
 export default function Home() {
   const [filteredCities, setFilteredCities] = useState([]);
   const [search, setSearch] = useState('');
@@ -41,15 +43,23 @@ export default function Home() {
       </Head>
 
       <main className="container mx-auto max-w-[700px]">
-        {isLoading && <h2 className="text-center">Loading...</h2>}
+        {isLoading && <h1 className={heading}>Loading...</h1>}
 
-        {data?.error && <h2>There is an error here...</h2>}
+        {data?.error && <h1 className={heading}>Something has gone wrong...</h1>}
 
-        {data?.success && <h2 className="text-center">HELLO</h2>}
+        {data?.success && <h1 className={heading}>Compare your cities</h1>}
 
         <SearchBar handleClick={filterAllCities} className="mx-auto mt-4 md:w-3/4" />
 
-        {search && filteredCities.length === 0 && <p className="mx-auto md:w-3/4 mt-4 text-center max-h-[200px]">No results matching your search</p>}
+        {search && filteredCities.length === 0
+        && (
+        <p
+          className="mx-auto md:w-3/4 mt-4 text-center max-h-[200px]"
+        >
+          No results matching your search
+        </p>
+        )}
+
         {filteredCities.length > 0
         && (
         <ul className="mx-auto rounded-lg shadow-lg md:w-3/4 overflow-y-scroll max-h-[200px] snap-y">
