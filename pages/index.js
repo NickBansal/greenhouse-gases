@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-
+import { useQuery } from 'react-query';
 import http from '../services/getData';
 import DATA from '../constants/api';
 
 export default function Home() {
-  useEffect(() => {
-    const getData = async () => {
-      const { response } = await http.get(DATA.GET_DATA);
-      console.log(response);
-    };
-
-    getData();
-  }, []);
+  const { isLoading, isError, data } = useQuery(['getCities'], () => http.get({
+    url: DATA.GET_DATA,
+  }), { refetchOnWindowFocus: false });
 
   return (
     <div>
