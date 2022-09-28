@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 
+import http from '../services/getData';
+import DATA from '../constants/api';
+
 export default function Home() {
+  useEffect(() => {
+    const getData = async () => {
+      const { response } = await http.get(DATA.GET_DATA);
+      console.log(response);
+    };
+
+    getData();
+  }, []);
+
   return (
     <div>
       <Head>
