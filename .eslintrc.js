@@ -20,5 +20,6 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
     'react/prop-types': 0,
+    'no-tabs': 0,
   },
 };
